@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans|Oswald|Raleway|Roboto');
+
+/* -----------------------------------*/
+/* ---------->>> GLOBAL <<<-----------*/
+/* -----------------------------------*/
+
+/*font-family: 'Roboto', sans-serif;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Oswald', sans-serif;
+font-family: 'Raleway', sans-serif;
+font-family: 'Josefin Sans', sans-serif;
+*/
+
+
+:root {
+  --main-bg-color: rgb(32, 32, 32);
+}
+
+body {
+    background-color: var(--main-bg-color); 
+    margin: auto;
+}
+
+h1 {
+    color: white;
+    width: 80%;
+    text-align:  center;
+    word-break: keep-all;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* -----------------------------------*/
+/* ---------->>> BUTTONS <<<-----------*/
+/* -----------------------------------*/
+
+button:hover {
+    cursor: pointer;
+}
+
+button:focus {
+    cursor: default;
+}

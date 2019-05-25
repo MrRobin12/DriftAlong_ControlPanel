@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>    
+    
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">    
+<link rel="stylesheet" href="style.css">    
+<script src="script.js"></script>
+    
+<!--META TAGS!-->
+    
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="Overgrown, PC, Vertun, Two players, CO-OP, Indie, Sweden, Kristianstad, Skåne, Svergie, Puzzle, Platform"/>
+<meta name="language" content="EN">
+    
+<!--META TAGS!-->
+    
+</head>
+    
+<body>
+
+<center>
+    <br>
+    <h1>COLOR</h1>    
+</center>   
+   
+<center>
+    
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>    
+        <p>Type a color</p>
+        Red Channel: <input id="rNumber" type="number" min="0" max="255" maxlength="3" value="0"><br>
+        Green Channel: <input id="gNumber" type="number" min="0" max="255" maxlength="3" value="0"><br>
+        Blue Channel: <input id="bNumber" type="number" min="0" max="255" maxlength="3" value="0"><br>
+  </div>
+</div>   
+    
+<div class="slidecontainer">
+    <p2><p3 id="hue">HUE: 50%</p3> <br> </p2>
+    <input type="range" min="0" max="100" value="0" class="slider" id="hue_slider" onchange="UpdateColor();" oninput="UpdateColor();"><br><br>
+    
+    <p2><p3 id="sat">SATURATION: 50%</p3> <br> </p2>
+    <input type="range" min="0" max="100" value="100" class="slider" id="sat_slider" onchange="UpdateColor();" oninput="UpdateColor();"><br><br>
+    
+    <p2><p3 id="light">LIGHTNESS: 50%</p3> <br> </p2>
+    <input type="range" min="0" max="100" value="50" class="slider" id="bright_slider" onchange="UpdateColor();" oninput="UpdateColor();"><br><br>
+</div>   
+<div class="color" id="COLOR"><a id="colorId" onclick="editColor();">#ffffff <br> rgb(255, 255, 255)</a></div>
+    
+<button onclick="window.open('../index.html', '_self')">RETURN</button>    
+    
+</center>    
+    
+</body>
+    
+</html>
