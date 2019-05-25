@@ -35,11 +35,17 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>    
-        <p>Type a color</p>
-        Red Channel: <input id="rNumber" type="number" min="0" max="255" maxlength="3" value="0"><br>
-        Green Channel: <input id="gNumber" type="number" min="0" max="255" maxlength="3" value="0"><br>
-        Blue Channel: <input id="bNumber" type="number" min="0" max="255" maxlength="3" value="0"><br>
-  </div>
+        <p>Write in a color with RGB parameters</p>
+        <div class="number">
+            <b>Red</b> Channel: <input class="number" id="rNumber" name="redChannel" step="1" maxlength="3" min="0" max="255" type="number"><br>
+        </div>     
+        <div class="number">
+            <b>Green</b> Channel: <input class="number" id="gNumber" name="greenChannel" step="1" maxlength="3" min="0" max="255" type="number"><br>
+        </div>    
+        <div class="number">
+            <b>Blue</b> Channel: <input id="bNumber" name="blueChannel" step="1" maxlength="3" min="0" max="255" type="number"><br>
+        </div>
+    </div>
 </div>   
     
 <div class="slidecontainer">
@@ -52,7 +58,7 @@
     <p2><p3 id="light">LIGHTNESS: 50%</p3> <br> </p2>
     <input type="range" min="0" max="100" value="50" class="slider" id="bright_slider" onchange="UpdateColor();" oninput="UpdateColor();"><br><br>
 </div>   
-<div class="color" id="COLOR"><a id="colorId" onclick="editColor();">#ffffff <br> rgb(255, 255, 255)</a></div>
+<div class="color" id="COLOR"><a id="colorId">#ffffff <br> rgb(255, 255, 255)</a></div>
     
 <button onclick="window.open('../index.html', '_self')">RETURN</button>    
     

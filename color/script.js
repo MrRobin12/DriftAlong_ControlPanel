@@ -1,18 +1,19 @@
 $(document).ready(function() {    
-    var redChannel = "255";
+    var redChannel = "0";
     var greenChannel = "255";
-    var blueChannel = "255";
+    var blueChannel = "0";
 
     var rgb = rgbToString(redChannel, greenChannel, blueChannel);
+    var hsl = rgbToHsl(redChannel, greenChannel, blueChannel);
+    var hslColor = hslToString(hsl);
     
     let root = document.documentElement;
-    root.style.setProperty('--vehicle_color', rgb);
+    root.style.setProperty('--vehicle_color', hslColor);
     
-    var hsl = rgbToHsl(redChannel, greenChannel, blueChannel);
     hsl[1] = 1;
     
     var hue_slider = document.getElementById("hue_slider");
-    var hue_value = (hsl[0] * 360);
+    var hue_value = ((hsl[0] * 360) / 360) * 100;
     hue_slider.value = hue_value;
     
     var saturation_slider = document.getElementById("sat_slider");
@@ -42,9 +43,8 @@ function UpdateColor() {
     
     let root = document.documentElement;
     
-    var hsl = hslToRGB(hue_value, saturation_value, brightness_value);
-    var mainColor = rgbToString(hsl.r, hsl.g, hsl.b);
-    root.style.setProperty('--vehicle_color', mainColor);
+    var hsl = hslToString2((hue_value / 360), (saturation_value / 100), (brightness_value / 100));
+    root.style.setProperty('--vehicle_color', hsl);
 }
 
 function seperateRGB(rgb) {
@@ -149,19 +149,41 @@ function rgbToHex(r, g, b) {
 }
 
 function rgbToString(r, g, b) {
-    return "rgb(" + r + "," + g + "," + b + ")";
+    return "rgb(" + r + ", " + g + ", " + b + ")";
+}
+
+function hslToString(hsl) {
+    return "hsl(" + (hsl[0] * 360) + ", " + (hsl[1] * 100) + "%" + ", " + (hsl[2] * 100 ) + "%" + ")";
+}
+
+function hslToString2(h, s, l) {
+    return "hsl(" + (h * 360) + ", " + (s * 100) + "%" + ", " + (l * 100 ) + "%" + ")";
 }
 
 window.onload = function(){ 
     UpdateModal();
 };
 
+function UpdateSliders(hsl) {
+    var hue_slider = document.getElementById("hue_slider");
+    var hue_value = (hsl[0] / 360) * 100;
+    hue_slider.value = hue_value;
+    
+    var saturation_slider = document.getElementById("sat_slider");
+    var saturation_value = (hsl[1] / 100) * 100;
+    saturation_slider.value = saturation_value;
+    
+    var brightness_slider = document.getElementById("bright_slider");
+    var brightness_value = (hsl[2] / 100) * 100;
+    brightness_slider.value = brightness_value;
+}
+
 function UpdateModal() {
 // Get the modal
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("colorId");
+var btn = document.getElementById("COLOR");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -174,6 +196,13 @@ let root = document.documentElement;
 var mainColor = "rgb(255, 255, 255)";
     
 redValue.onchange = function() {
+    
+    if (redValue.value > 255)
+        redValue.value = 255;
+    
+    if (redValue.value < 0)
+        redValue.value = 0;
+    
     var rgb = seperateRGB(mainColor);
     rgb[0] = redValue.value;
     rgb[1] = greenValue.value;
@@ -181,11 +210,22 @@ redValue.onchange = function() {
     
     var value = rgbToHsl(rgb[0], rgb[1], rgb[2]);
     var result = "hsl" + "(" + (value[0] * 360) + ", " + (value[1] * 100) + "%" + ", " + (value[2] * 100) + "%" + ")";
+    
+    var hsl = seperateHSL(result);  
+    UpdateSliders(hsl);
+    
     UpdateText(rgb[0], rgb[1], rgb[2]);
     root.style.setProperty('--vehicle_color', result);
 }
 
 greenValue.onchange = function() {
+    
+    if (greenValue.value > 255)
+        greenValue.value = 255;
+    
+    if (greenValue.value < 0)
+        greenValue.value = 0;
+    
     var rgb = seperateRGB(mainColor);
     rgb[0] = redValue.value;
     rgb[1] = greenValue.value;
@@ -193,11 +233,22 @@ greenValue.onchange = function() {
     
     var value = rgbToHsl(rgb[0], rgb[1], rgb[2]);
     var result = "hsl" + "(" + (value[0] * 360) + ", " + (value[1] * 100) + "%" + ", " + (value[2] * 100) + "%" + ")";
+    
+    var hsl = seperateHSL(result);  
+    UpdateSliders(hsl);
+    
     UpdateText(rgb[0], rgb[1], rgb[2]);
     root.style.setProperty('--vehicle_color', result);
 }
 
 blueValue.onchange = function() {
+    
+    if (blueValue.value > 255)
+        blueValue.value = 255;
+    
+    if (blueValue.value < 0)
+        blueValue.value = 0;
+    
     var rgb = seperateRGB(mainColor);
     rgb[0] = redValue.value;
     rgb[1] = greenValue.value;
@@ -205,32 +256,35 @@ blueValue.onchange = function() {
     
     var value = rgbToHsl(rgb[0], rgb[1], rgb[2]);
     var result = "hsl" + "(" + (value[0] * 360) + ", " + (value[1] * 100) + "%" + ", " + (value[2] * 100) + "%" + ")";
+    
+    var hsl = seperateHSL(result);  
+    UpdateSliders(hsl);
+    
     UpdateText(rgb[0], rgb[1], rgb[2]);
     root.style.setProperty('--vehicle_color', result);
 }
 
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
-    var color = getComputedStyle(document.documentElement).getPropertyValue('--vehicle_color');
-    var rgb = seperateRGB(color);
+    var hsl = getComputedStyle(document.documentElement).getPropertyValue('--vehicle_color');
+    var newHSL = seperateHSL(hsl);
+    var rgb = hslToRGB(newHSL[0], newHSL[1], newHSL[2]);
     
     modal.style.display = "block";   
-    redValue.value = Math.round(rgb[0]);
-    greenValue.value = Math.round(rgb[1]);
-    blueValue.value = Math.round(rgb[2]);
+    redValue.value = Math.round(rgb.r);
+    greenValue.value = Math.round(rgb.g);
+    blueValue.value = Math.round(rgb.b);
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
-    root.style.setProperty('--vehicle_color', mainColor);
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
       modal.style.display = "none";
-      root.style.setProperty('--vehicle_color', mainColor);
   }
 }
 
