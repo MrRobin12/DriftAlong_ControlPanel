@@ -187,3 +187,37 @@ input {
     background: rgba(255, 255, 255, 0.5);
     margin: 0 0 10px 0;
 }
+
+/* -----------------------------------*/
+/* ---------->>> TABLET <<<-----------*/
+/* -----------------------------------*/
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    button {
+        margin-top: 50px;
+    }
+}
+
+/* -----------------------------------*/
+/* ---------->>> PHONE <<<-----------*/
+/* -----------------------------------*/
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+    
+}
+
+/* -----------------------------------*/
+/* ---------->>> PC <<<-----------*/
+/* -----------------------------------*/
+
+@media only screen and (min-width: 1024px) and (max-width: 8000px) {
+
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}
